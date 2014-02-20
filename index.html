@@ -1,0 +1,639 @@
+<!DOCTYPE html> 
+<html>
+<head>
+<meta charset="utf-8">
+<title>jQuery Mobile Web App</title>
+<link href="jquery.mobile.theme-1.0.min.css" rel="stylesheet" type="text/css"/>
+<link href="jquery.mobile.structure-1.0.min.css" rel="stylesheet" type="text/css"/>
+<script src="jquery-1.6.4.min.js" type="text/javascript"></script>
+<script src="jquery.mobile-1.0.min.js" type="text/javascript"></script>
+<style type="text/css">
+.header{background-color:#900;"}
+</style>
+<script>
+$(function() {
+  setTimeout(hideSplash, 2000);
+});
+
+function hideSplash() {
+  $.mobile.changePage("#home", "fade");
+}
+</script>
+<script type="application/javascript">
+
+function loadPdata()
+{
+	var a=document.getElementById("username").value;
+var xmlHttp = null;	
+var url="http://anuragmobile.anuragapps.com/PData.aspx?id="+a;	
+xmlHttp = new XMLHttpRequest();
+       xmlHttp.open( "GET",url , false);
+      xmlHttp.send( null );
+
+
+           var r = xmlHttp.responseText;
+		   //alert(r);
+			var u=r.split(",");
+			document.getElementById("pmob").value=u[0];
+			document.getElementById("mob").value=u[1];
+			document.getElementById("emails").value=u[2];
+			
+
+}
+function svePdata()
+{
+	var a=document.getElementById("username").value;
+	var pmob=document.getElementById("pmob").value;
+	var mob=document.getElementById("mob").value;
+			var emails=document.getElementById("emails").value;
+
+if(phonenumber(pmob) && phonenumber(mob) && ValidateEmail(emails))
+{
+	var url="http://anuragmobile.anuragapps.com/svePdata.aspx?id="+a+"&id1="+pmob+"&id2="+mob+"&id3="+emails;
+	xmlHttp = new XMLHttpRequest();
+       xmlHttp.open( "GET",url , true);
+      xmlHttp.send( null );
+	  shw1();
+	  var r="";
+xmlHttp.onreadystatechange = function() {
+
+        if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+            r = xmlHttp.responseText;
+       	 hide1();
+		alert(r);	
+		}}
+}
+
+
+}
+
+function loadAdata()
+{
+	var a=document.getElementById("username").value;
+var xmlHttp = null;	
+var url="http://anuragmobile.anuragapps.com/Adata.aspx?id="+a;	
+xmlHttp = new XMLHttpRequest();
+       xmlHttp.open( "GET",url , false);
+      xmlHttp.send( null );
+
+
+           var r = xmlHttp.responseText;
+		   //alert(r);
+			var u=r.split(",");
+			document.getElementById("btech").value=u[0];
+			document.getElementById("pg").value=u[1];
+			document.getElementById("bg").value=u[2];
+			
+
+}
+
+function sveAdata()
+{
+	var a=document.getElementById("username").value;
+	var btech=document.getElementById("btech").value;
+	var pg=document.getElementById("pg").value;
+	var bg=document.getElementById("bg").value;
+	if(checkRange(btech) && checkRange(pg) && checkRange(bg))
+	{
+		var url="http://anuragmobile.anuragapps.com/sveAdata.aspx?id="+a+"&id1="+btech+"&id2="+pg+"&id3="+bg;
+	xmlHttp = new XMLHttpRequest();
+       xmlHttp.open( "GET",url , true);
+     xmlHttp.send( null );
+	 // alert(url);
+	  shw2();
+	  var r="";
+xmlHttp.onreadystatechange = function() {
+
+        if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+            r = xmlHttp.responseText;
+       	 hide2();
+		alert(r);	
+		}}
+	
+		
+	
+}}
+
+function getEMarks()
+{
+	var a=document.getElementById("username").value;
+	var sem=document.getElementById("sem").value;
+//	alert(sem);
+var url="http://anuragmobile.anuragapps.com/getMarks.aspx?id="+a+"&id1="+sem;
+	xmlHttp = new XMLHttpRequest();
+       xmlHttp.open( "GET",url , true);
+     xmlHttp.send( null );
+	 // alert(url);
+	  shw3();
+	  var r="";
+xmlHttp.onreadystatechange = function() {
+
+        if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+            r = xmlHttp.responseText;
+       	 hide3();
+		document.getElementById("emarks").innerHTML=r;
+		}}
+	
+}
+function loadImarks()
+{
+	var a=document.getElementById("username").value;
+	var sem=document.getElementById("isem").value;
+	var mid=document.getElementById("imid").value;
+	//alert(sem);
+var url="http://anuragmobile.anuragapps.com/getIMarks.aspx?id="+a+"&id1="+sem+"&id2="+mid;
+	xmlHttp = new XMLHttpRequest();
+       xmlHttp.open( "GET",url , true);
+     xmlHttp.send( null );
+	 // alert(url);
+	  shw4();
+	  var r="";
+xmlHttp.onreadystatechange = function() {
+
+        if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+            r = xmlHttp.responseText;
+       	 hide4();
+		document.getElementById("imarks").innerHTML=r;
+		}}
+}
+function getTables()
+{
+	var a=document.getElementById("username").value;
+	var day=document.getElementById("tday").value;
+var url="http://anuragmobile.anuragapps.com/getTables.aspx?id="+a+"&id1="+day;
+	xmlHttp = new XMLHttpRequest();
+       xmlHttp.open( "GET",url , true);
+     xmlHttp.send( null );
+	 // alert(url);
+	  shw5();
+	  var r="";
+xmlHttp.onreadystatechange = function() {
+
+        if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+            r = xmlHttp.responseText;
+       	 hide5();
+		document.getElementById("daytable").innerHTML=r;
+		}}
+	
+	
+	
+}
+function getNBoard()
+{
+var url="http://anuragmobile.anuragapps.com/getNBoard.aspx";
+	xmlHttp = new XMLHttpRequest();
+       xmlHttp.open( "GET",url , false);
+     xmlHttp.send( null );
+	
+	r = xmlHttp.responseText;
+       	 
+		document.getElementById("Nboard").innerHTML=r;
+	
+}
+function getPBoard()
+{
+var url="http://anuragmobile.anuragapps.com/getPBoard.aspx";
+	xmlHttp = new XMLHttpRequest();
+       xmlHttp.open( "GET",url , false);
+     xmlHttp.send( null );
+	
+	r = xmlHttp.responseText;
+       	 
+		document.getElementById("Pboard").innerHTML=r;
+	
+}
+function getAtt()
+{
+	var a=document.getElementById("username").value;
+	var url="http://anuragmobile.anuragapps.com/getAttendance.aspx?id="+a;
+	xmlHttp = new XMLHttpRequest();
+       xmlHttp.open( "GET",url , false);
+     xmlHttp.send( null );
+	
+	r = xmlHttp.responseText;
+       	 
+		document.getElementById("gatt").innerHTML=r;
+	
+	//alert("hai");
+}
+function checkRange(va)
+{
+	var num=parseInt(va);
+//	alert(Math.round(num));
+	if(Math.round(va) == num && num%1==0)
+	{
+	if(num>=0 && num<=100)
+	{
+		
+	return true;	
+	}
+	else
+	{
+		
+	alert("Invalid Percentage");
+	return false;	
+	}
+	}
+	else
+	{
+		alert("Invalid Number");
+	return false;	
+		
+	}
+}
+
+function phonenumber(inputtxt)  
+{  
+
+  var phoneno = /^\d{10}$/;  
+  if(inputtxt.match(phoneno))  
+  {  
+      return true;  
+  }  
+  else  
+  {  
+     alert("Not a valid Phone Number");  
+     return false;  
+  }  
+  }  
+
+function ValidateEmail(inputText)  
+{  
+var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;  
+if(inputText.match(mailformat))  
+{  
+
+return true;  
+}  
+else  
+{  
+alert("You have entered an invalid email address!");  
+return false;  
+}  
+}  
+
+
+
+function aaa()
+{
+document.getElementById("d1").innerHTML=" ";
+	var a=document.getElementById("username").value;
+    var b=document.getElementById("password").value;
+var xmlHttp = null;
+var url="http://anuragmobile.anuragapps.com/verifyLogin.aspx?id="+a+"&id1="+b
+var url1="http://anuragmobile.anuragapps.com/getData.aspx?id="+a;
+shw();
+
+       xmlHttp = new XMLHttpRequest();
+       xmlHttp.open( "GET",url , true );
+      xmlHttp.send( null );
+var r="";
+xmlHttp.onreadystatechange = function() {
+
+        if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+            r = xmlHttp.responseText;
+        hide();
+       //var r=xmlHttp.responseText;
+
+       if(r.indexOf("0")!=-1)
+       {
+       document.getElementById("d1").innerHTML="Invalid UserName and Password";
+              }
+       else
+	   {
+      xmlHttp.open( "GET",url1 , false );
+      xmlHttp.send( null );
+       var r1=xmlHttp.responseText;
+       document.getElementById("d2").innerHTML=r1;
+	   
+	   $.mobile.changePage("#home2", "fade");
+	   loadPdata();
+	   loadAdata();
+	   getNBoard();
+	   getPBoard();
+	   getAtt();
+	   }
+//document.getElementById("d1").innerHTML=r.lenth;
+
+//window.location = 'ccc.html';
+}
+    }	
+}
+
+function aaaa()
+{
+	
+$.mobile.changePage("#hpage", "fade");
+//window.location = 'ccc.html';	
+}
+function shw()
+{
+document.getElementById("processed-msg").style.display="block";
+}
+function hide() {
+ // document.getElementById("processing-img").style.display="none";
+  document.getElementById("processed-msg").style.display="none";
+}
+function shw1()
+{
+document.getElementById("processed-msg1").style.display="block";
+}
+function hide1() {
+ // document.getElementById("processing-img").style.display="none";
+  document.getElementById("processed-msg1").style.display="none";
+}
+function shw2()
+{
+document.getElementById("processed-msg2").style.display="block";
+}
+function hide2() {
+ // document.getElementById("processing-img").style.display="none";
+  document.getElementById("processed-msg2").style.display="none";
+}
+function shw3()
+{
+document.getElementById("processed-msg3").style.display="block";
+}
+function hide3() {
+ // document.getElementById("processing-img").style.display="none";
+  document.getElementById("processed-msg3").style.display="none";
+}
+function shw4()
+{
+document.getElementById("processed-msg4").style.display="block";
+}
+function hide4() {
+ // document.getElementById("processing-img").style.display="none";
+  document.getElementById("processed-msg4").style.display="none";
+}
+function shw5()
+{
+document.getElementById("processed-msg5").style.display="block";
+}
+function hide5() {
+ // document.getElementById("processing-img").style.display="none";
+  document.getElementById("processed-msg5").style.display="none";
+}
+
+</script>
+
+</head> 
+<body> 
+
+<div data-role="page" data-theme="b" id="splash" style="background-color: #fff;"> 
+    <div class="splash" align="center">
+    <br/><br/><br/><br/><br/><br/><br/>
+        <img src="images/logo.png" alt="splash" />
+       <br/> <b>Welcome To AnuragEngineeringCollege</b>
+    </div>
+</div>
+<div data-role="page" data-theme="b" id="home"> 
+    <div data-role="content">
+        <div data-role="content"> 
+        <form>
+          <label for="username" >Username:</label>
+<input type="text" name="username" id="username" value="" placeholder="Username"/>  
+<label for="password" >Password:</label>
+<input type="password" name="password" id="password" value="" placeholder="Password"/>  
+<input type="button" ID="b1" name="b1" value="Login"  onClick="aaa()"/>
+</form>
+<div id="processed-msg" style="display:none">Please Wait,processing... </div>
+<div id="d1" name="d1">
+
+</div>
+        </div>
+    </div>
+</div>
+<div data-role="page" data-theme="b" id="home2"> 
+<div id="d2" name="d2">
+
+
+</div>
+
+<input type="button" ID="b2" name="b2" value="Continue"  onClick="aaaa()"/>
+
+</div>
+<div data-role="page" id="hpage" data-theme="b" >
+	<div     data-role="header"   data-position="fixed">
+    <a href="#" data-role="button" data-icon="home" data-corners="false" data-iconpos="notext">Home</a>
+		<h1>Anurag Engineering College</h1>
+        
+	</div>
+    <!-- subheader -->
+			<div class="subheader ui-header ui-bar-c">
+				<h1 class="ui-title">Menu</h1>
+			</div><!-- /subheader -->
+			
+	<div data-role="content">	
+		<ul data-role="listview" data-theme="a">
+			<li data-theme="a"><a href="#page2" >PersonalProfile</a></li>
+            <li data-theme="b"><a href="#page3" >AcedamicProfile</a></li>
+			<li data-theme="c"><a href="#page4" >InternalMarks</a></li>
+            <li data-theme="a"><a href="#page5" >ExternalMarks</a></li>
+            <li data-theme="b"><a href="#page6" >Attendance</a></li>
+            <li data-theme="c"><a href="#page7" >TimeTables</a></li>
+            <li data-theme="a"><a href="#page8" >NoticeBoard</a></li>
+            <li data-theme="b"><a href="#page9" >Placements</a></li>
+            
+		</ul>		
+	</div>
+	<div data-role="footer" data-position="fixed">
+				<!-- navbar -->
+	            <div data-role="navbar">
+	                <ul>
+	                    <li><a href="#" data-icon="doc">News</a></li>
+	                    <li><a href="#" data-icon="basket" class="ui-btn-active">Shop</a></li>
+	                    <li><a href="#" data-icon="rss">RSS</a></li>
+	                    <li><a href="#" data-icon="th-list">My List</a></li>
+	                    <li><a href="#" data-icon="export">Export</a></li>
+	                </ul>
+	            </div><!-- /navbar -->
+			</div><!-- /footer -->
+
+</div>
+
+<div data-role="page" id="page2">
+	<div data-role="header">
+		<h1>Profile</h1>
+		<a href="#hpage" data-role="button" data-icon="back" data-corners="false" data-iconpos="notext">Back</a>
+	</div>
+	<div data-role="content">	
+    <label for="Pmobile" >ParentMobile:</label>
+    <input type="text" Id="pmob" name="pmob"/>
+    <label for="mobile" >Mobile:</label>
+    <input type="text" Id="mob" name="mob"/>
+    <label for="email" >EMAIL:</label>
+    <input type="text" Id="emails" name="emails"/>
+	<input type="button" name="fb1" id="fb1" value="Update" onClick="svePdata()"/>
+    <div id="processed-msg1" style="display:none">Please Wait,processing... </div>	
+	</div>
+	<div data-role="footer">
+		<h4>Anurag Engineering College</h4>
+	</div>
+</div>
+
+<div data-role="page" id="page3">
+	<div data-role="header">
+		<h1>AcedamicProfile</h1>
+        <a href="#hpage" data-role="button" data-icon="back" data-corners="false" data-iconpos="notext">Back</a>
+	</div>
+	<div data-role="content">	
+		<label for="Btech" >B.Tech%(Upto this sem):</label>
+    <input type="text" Id="btech" name="btech"/>
+    <label for="mobile" >PG%(If Any):</label>
+    <input type="text" Id="pg" name="pg"/>
+    <label for="bg" >Backlogs:(If Any)</label>
+    <input type="text" Id="bg" name="bg"/>
+	<input type="button" name="fb2" id="fb2" value="Update" onClick="sveAdata()"/>	
+    <div id="processed-msg2" style="display:none">Please Wait,processing... </div>	
+	</div>
+	<div data-role="footer">
+		<h4>Anurag Engineering College</h4>
+	</div>
+</div>
+
+<div data-role="page" id="page4">
+	<div data-role="header">
+		<h1>InternalMarks</h1>
+        <a href="#hpage" data-role="button" data-icon="back" data-corners="false" data-iconpos="notext">Back</a>
+	</div>
+	<div data-role="content">	
+		<label for="Sem">Semester</label>		
+        <select id="isem">
+        <option>I</option>
+        <option>I_I</option>
+        <option>I_II</option>
+        <option>II</option>
+        <option>II_I</option>
+        <option>II_II</option>
+        <option>III</option>
+        <option>III_I</option>
+        <option>III_II</option>
+        <option>IV</option>
+        <option>IV_I</option>
+        <option>IV_II</option>
+        </select>
+        <label for="mid">MIDNO:</label>		
+        <select id="imid">
+        <option>I_Mid</option>
+        <option>II_Mid</option>
+        <option>III_Mid</option>
+        <option>IV_Mid</option>
+        <option>V_Mid</option>
+        
+        
+        </select>
+        <input type="button" name="fb3" id="fb3" value="View" onClick="loadImarks()"/>
+        <div id="processed-msg4" style="display:none">Please Wait,processing... </div>	
+        <div id="imarks">
+        
+        </div>
+	</div>
+	<div data-role="footer">
+		<h4>Anurag Engineering College</h4>
+	</div>
+</div>
+<div data-role="page" id="page5">
+	<div data-role="header">
+		<h1>ExternalMarks</h1>
+        <a href="#hpage" data-role="button" data-icon="back" data-corners="false" data-iconpos="notext">Back</a>
+	</div>
+	<div data-role="content">	
+		<label for="Seme">Semester</label>		
+        <select id="sem">
+        <option>I</option>
+        <option>I_I</option>
+        <option>I_II</option>
+        <option>II</option>
+        <option>II_I</option>
+        <option>II_II</option>
+        <option>III</option>
+        <option>III_I</option>
+        <option>III_II</option>
+        <option>IV</option>
+        <option>IV_I</option>
+        <option>IV_II</option>
+        </select>
+        
+        <input type="button" name="fb4" id="fb4" value="View" onClick="getEMarks()"/>
+        <div id="processed-msg3" style="display:none">Please Wait,processing... </div>	
+        <div id="emarks">
+        
+        </div>		
+	</div>
+	<div data-role="footer">
+		<h4>Anurag Engineering College</h4>
+	</div>
+</div>
+<div data-role="page" id="page6">
+	<div data-role="header">
+		<h1>Attendance</h1>
+        <a href="#hpage" data-role="button" data-icon="back" data-corners="false" data-iconpos="notext">Back</a>
+	</div>
+	<div data-role="content">	
+		<div id="gatt">
+        
+        </div>
+	</div>
+	<div data-role="footer">
+		<h4>Anurag Engineering College</h4>
+	</div>
+</div>
+<div data-role="page" id="page7">
+	<div data-role="header">
+		<h1>TimeTables</h1>
+        <a href="#hpage" data-role="button" data-icon="back" data-corners="false" data-iconpos="notext">Back</a>
+	</div>
+	<div data-role="content">	
+		<label for="tables">Day</label>		
+        <select id="tday">
+        <option>Monday</option>
+        <option>Tuesday</option> 
+        <option>Wednesday</option>
+        <option>Thursday</option>
+        <option>Friday</option>
+        <option>Saturday</option>
+        </select>
+        
+        <input type="button" name="fb5" id="fb5" value="View" onClick="getTables()"/>
+        <div id="processed-msg5" style="display:none">Please Wait,processing... </div>
+        <div id="daytable">
+        
+        </div>		
+	</div>
+	<div data-role="footer">
+		<h4>Anurag Engineering College</h4>
+	</div>
+</div>
+<div data-role="page" id="page8">
+	<div data-role="header">
+		<h1>NoticeBoard</h1>
+        <a href="#hpage" data-role="button" data-icon="back" data-corners="false" data-iconpos="notext">Back</a>
+	</div>
+	<div data-role="content">	
+		<div id="Nboard">
+        
+        </div>
+	</div>
+	<div data-role="footer">
+		<h4>Anurag Engineering College</h4>
+	</div>
+</div>
+<div data-role="page" id="page9">
+	<div data-role="header">
+		<h1>Page Four</h1>
+        <a href="#hpage" data-role="button" data-icon="back" data-corners="false" data-iconpos="notext">Back</a>
+	</div>
+	<div data-role="content">	
+		<div id="Pboard">
+        
+        </div>
+	</div>
+	<div data-role="footer">
+		<h4>Anurag Engineering College</h4>
+	</div>
+</div>
+</div>
+
+</body>
+</html>
